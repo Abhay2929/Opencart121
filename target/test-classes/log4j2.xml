@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    
+
+    
+    <Appenders>
+        <!-- 1️⃣ Console Appender: Logs output to the terminal  -->
+        <Console name="ConsoleLogger" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %m%n</Pattern>
+            </PatternLayout>
+        </Console>
+
+        <!-- 2️⃣ Rolling File Appender: Logs messages to a file with auto-rotation -->
+        <RollingFile name="FileLogger" fileName="logs/automation.log"
+                     filePattern="logs/automation-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <!-- Log file will roll over when it reaches 10MB -->
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- Root Logger: Logs INFO and higher messages to both Console and File -->
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleLogger"/>
+            <AppenderRef ref="FileLogger"/>
+        </Root>
+
+        <!-- Specific Logger for Test Cases -->
+        <Logger name="tests" level="DEBUG" additivity="false">
+            <AppenderRef ref="FileLogger"/>
+        </Logger>
+    </Loggers>
+
+</Configuration>
